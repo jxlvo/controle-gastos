@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+    />
+    <title>Controle de Gastos</title>
+
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <header>
+        <h1>💰 Gastos da Família</h1>
+        <p id="status">Sincronizando dados...</p>
+      </header>
+
+      <!-- CONTROLES -->
+      <section class="controles">
+        <!-- BOTÕES DE RESPONSÁVEL -->
+        <div class="botoes-pessoa">
+          <button class="btn" onclick="setResponsavel('Julinho')">
+            Julinho
+          </button>
+          <button class="btn" onclick="setResponsavel('Fabiana')">
+            Fabiana
+          </button>
+        </div>
+
+        <!-- SELECT DE MÊS (AUTOMÁTICO) -->
+        <div class="seletor-mes">
+          <label for="Fatura">Mês da fatura</label>
+          <select id="Fatura" onchange="renderizar()">
+            <option value="">Selecione o mês</option>
+          </select>
+        </div>
+      </section>
+
+      <!-- LISTA DE GASTOS -->
+      <main id="lista"></main>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
