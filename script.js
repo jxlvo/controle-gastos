@@ -53,6 +53,17 @@ function renderizar() {
     );
   });
 
+  let total = 0;
+
+  filtrados.forEach((linha) => {
+    const [, , valor] = linha;
+    total += parseValor(valor);
+  });
+
+  document.getElementById(
+    "totalFatura"
+  ).innerText = `Total da fatura: ${formatarValor(total)}`;
+
   if (!filtrados.length) {
     lista.innerHTML = "<p>Nenhum gasto encontrado.</p>";
     return;
