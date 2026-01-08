@@ -3,8 +3,11 @@ let filtroResponsavel = "Julinho";
 
 const SHEET_ID = "1EtcHOcCxZljeDSnMjd79cxA9SqIM27nTutXqNQfesc8";
 const API_KEY = "AIzaSyDbxjFXJowb1Hv6k3aTJzcBWJLS4kSyuYY";
-const ABA = "Sheet1"; // nome da aba única
+const ABA = "Sheet1";
 
+// =====================
+// CARREGAR DADOS
+// =====================
 async function carregarDados() {
   document.getElementById("status").innerText = "Sincronizando...";
 
@@ -12,8 +15,6 @@ async function carregarDados() {
     const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${ABA}?key=${API_KEY}`;
     const response = await fetch(url);
     const json = await response.json();
-    console.log("JSON bruto:", json);
-    console.log("Valores:", json.values);
 
     if (!json.values) {
       throw new Error("Planilha vazia ou não encontrada");
@@ -22,7 +23,7 @@ async function carregarDados() {
     // Remove cabeçalho
     dadosPlanilha = json.values.slice(1);
 
-    popularMeses(); // 👈 ISSO FALTAVA
+    popularMeses();
     renderizar();
 
     document.getElementById("status").innerText =
@@ -33,11 +34,16 @@ async function carregarDados() {
   }
 }
 
+// =====================
+// RENDERIZAR
+// =====================
 function renderizar() {
   const lista = document.getElementById("lista");
   const mesSelecionado = document.getElementById("Fatura").value;
+  const totalEl = document.getElementById("totalFatura");
 
   lista.innerHTML = "";
+  totalEl.style.display = "none"; // 👈 escondido por padrão
 
   if (!mesSelecionado) {
     lista.innerHTML = "<p>Selecione um mês para visualizar os gastos.</p>";
@@ -53,6 +59,11 @@ function renderizar() {
     );
   });
 
+  if (!filtrados.length) {
+    lista.innerHTML = "<p>Nenhum gasto encontrado.</p>";
+    return;
+  }
+
   let total = 0;
 
   filtrados.forEach((linha) => {
@@ -60,14 +71,8 @@ function renderizar() {
     total += parseValor(valor);
   });
 
-  document.getElementById(
-    "totalFatura"
-  ).innerText = `Total da fatura: ${formatarValor(total)}`;
-
-  if (!filtrados.length) {
-    lista.innerHTML = "<p>Nenhum gasto encontrado.</p>";
-    return;
-  }
+  totalEl.innerText = `Total da fatura: ${formatarValor(total)}`;
+  totalEl.style.display = "block"; // 👈 mostra apenas agora
 
   filtrados.forEach((linha) => {
     const [data, desc, valor] = linha;
@@ -77,24 +82,24 @@ function renderizar() {
         <small>${data || ""}</small><br>
         <strong>${desc || "Compra"}</strong>
         <span class="valor">${formatarValor(valor)}</span>
-
       </div>
     `;
   });
 }
 
+// =====================
+// RESPONSÁVEL
+// =====================
 function setResponsavel(nome) {
   filtroResponsavel = nome;
   renderizar();
 }
 
-carregarDados();
-setInterval(carregarDados, 60000);
-
+// =====================
+// MESES
+// =====================
 function popularMeses() {
   const select = document.getElementById("Fatura");
-
-  // Remove todas as opções, exceto a primeira ("Selecione o mês")
   select.innerHTML = `<option value="">Selecione o mês</option>`;
 
   const meses = dadosPlanilha
@@ -128,6 +133,9 @@ function popularMeses() {
   });
 }
 
+// =====================
+// VALOR
+// =====================
 function parseValor(valor) {
   if (!valor) return 0;
 
@@ -151,3 +159,9 @@ function formatarValor(valor) {
     currency: "BRL",
   });
 }
+
+// =====================
+// INICIALIZAÇÃO
+// =====================
+carregarDados();
+setInterval(carregarDados, 60000);

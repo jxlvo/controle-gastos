@@ -95,17 +95,46 @@ select {
   font-size: 1.1em;
 }
 
-.total-container {
-  background: #d6eaf8 !important;
-  border-left: 5px solid #2980b9 !important;
+.total {
+  align-self: flex-start;
+  width: fit-content;
+  background: white;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  border-left: 5px solid #2980b9;
+
+  font-size: 1.1em;
+  font-weight: bold;
+  text-align: center;
+  color: #2c3e50;
 }
 
-.total {
-  font-size: 1.2rem;
-  font-weight: bold;
-  margin: 15px 0;
-  padding: 10px;
-  background: #f2f2f2;
-  border-radius: 8px;
-  text-align: center;
+.linha-topo {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  width: 100%;
+  max-width: 450px;
+  margin: 0 auto 20px auto;
+}
+
+.controles {
+  flex: 0 0 auto; /* 👈 NÃO ENCOLHE */
+  width: 100%;
+}
+
+@media (max-width: 480px) {
+  .linha-topo {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .total {
+    width: 100%;
+    align-self: stretch;
+    box-sizing: border-box;
+    text-align: left; /* 👈 AQUI */
+  }
 }

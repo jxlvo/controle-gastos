@@ -19,31 +19,34 @@
       </header>
 
       <!-- CONTROLES -->
-      <section class="controles">
-        <!-- BOTÕES DE RESPONSÁVEL -->
-        <div class="botoes-pessoa">
-          <button class="btn" onclick="setResponsavel('Julinho')">
-            Julinho
-          </button>
-          <button class="btn" onclick="setResponsavel('Fabiana')">
-            Fabiana
-          </button>
-        </div>
+      <!-- LINHA SUPERIOR -->
+      <div class="linha-topo">
+        <section class="controles">
+          <div class="botoes-pessoa">
+            <button class="btn" onclick="setResponsavel('Julinho')">
+              Julinho
+            </button>
+            <button class="btn" onclick="setResponsavel('Fabiana')">
+              Fabiana
+            </button>
+          </div>
 
-        <!-- SELECT DE MÊS (AUTOMÁTICO) -->
-        <div class="seletor-mes">
-          <label for="Fatura">Mês da fatura</label>
-          <select id="Fatura" onchange="renderizar()">
-            <option value="">Selecione o mês</option>
-          </select>
-        </div>
-      </section>
+          <div class="seletor-mes">
+            <label for="Fatura">Mês da fatura</label>
+            <select id="Fatura" onchange="renderizar()">
+              <option value="">Selecione o mês</option>
+            </select>
+          </div>
+        </section>
+
+        <div id="totalFatura" class="total" style="display: none"></div>
+      </div>
 
       <!-- LISTA DE GASTOS -->
       <main id="lista"></main>
     </div>
 
     <script src="script.js"></script>
-    <div id="totalFatura" class="total">Total da fatura: R$ 0,00</div>
+    <div id="totalFatura" class="total" style="display: none"></div>
   </body>
 </html>
