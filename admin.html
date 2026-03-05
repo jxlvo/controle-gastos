@@ -1,0 +1,33 @@
+<div class="controles admin-panel">
+  <h2>📝 Novo Gasto</h2>
+  <form id="formGasto">
+    <input type="date" id="inputData" required />
+    <input
+      type="text"
+      id="inputDesc"
+      placeholder="Descrição (ex: Mercado)"
+      required
+    />
+    <input
+      type="number"
+      step="0.01"
+      id="inputValor"
+      placeholder="Valor (0.00)"
+      required
+    />
+
+    <select id="inputResponsavel" required>
+      <option value="Julinho">Julinho</option>
+      <option value="Fabiana">Fabiana</option>
+    </select>
+
+    <select id="inputFatura" required>
+      <option value="Janeiro">Janeiro</option>
+      <option value="Fevereiro">Fevereiro</option>
+      <option value="Março">Março</option>
+    </select>
+
+    <button type="submit" class="btn">Enviar para Planilha</button>
+  </form>
+  <p id="msgStatus"></p>
+</div>
