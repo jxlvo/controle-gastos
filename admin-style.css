@@ -1,0 +1,78 @@
+/* Estilos específicos para o Admin */
+
+.login-box {
+  text-align: center;
+  padding: 30px !important;
+}
+
+#senhaInput {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.admin-form label {
+  display: block;
+  font-weight: bold;
+  color: #34495e;
+  margin-bottom: 5px;
+  font-size: 0.9em;
+}
+
+.admin-form input,
+.admin-form select {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.btn-salvar {
+  background-color: #27ae60 !important;
+  width: 100%;
+  font-size: 1.1em;
+}
+
+.btn-salvar:active {
+  background-color: #219150 !important;
+}
+
+.btn-voltar {
+  display: block;
+  text-align: center;
+  margin-top: 20px;
+  color: #7f8c8d;
+  text-decoration: none;
+  font-size: 0.9em;
+}
+
+.msg-erro {
+  color: #e74c3c;
+  font-size: 0.85em;
+  display: none;
+  margin-top: 10px;
+}
+
+.status-sucesso {
+  color: #27ae60;
+  font-weight: bold;
+}
+
+.status-erro {
+  color: #e74c3c;
+  font-weight: bold;
+}
+
+/* Ajuste para mobile */
+@media (max-width: 480px) {
+  .container {
+    padding: 10px;
+  }
+}

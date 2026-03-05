@@ -1,33 +1,147 @@
-<div class="controles admin-panel">
-  <h2>📝 Novo Gasto</h2>
-  <form id="formGasto">
-    <input type="date" id="inputData" required />
-    <input
-      type="text"
-      id="inputDesc"
-      placeholder="Descrição (ex: Mercado)"
-      required
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
     />
-    <input
-      type="number"
-      step="0.01"
-      id="inputValor"
-      placeholder="Valor (0.00)"
-      required
-    />
+    <title>Painel Admin - Gastos</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="admin-style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1 id="tituloPagina">🔐 Acesso Restrito</h1>
+        <p id="statusAdmin">Identifique-se para continuar</p>
+      </header>
 
-    <select id="inputResponsavel" required>
-      <option value="Julinho">Julinho</option>
-      <option value="Fabiana">Fabiana</option>
-    </select>
+      <section id="telaLogin" class="controles login-box">
+        <input
+          type="password"
+          id="senhaInput"
+          placeholder="Digite a senha mestra"
+        />
+        <button onclick="verificarSenha()" class="btn">Entrar</button>
+        <p id="erroSenha" class="msg-erro">Senha incorreta! ❌</p>
+      </section>
 
-    <select id="inputFatura" required>
-      <option value="Janeiro">Janeiro</option>
-      <option value="Fevereiro">Fevereiro</option>
-      <option value="Março">Março</option>
-    </select>
+      <section id="areaRestrita" class="controles" style="display: none">
+        <form id="formGasto" class="admin-form">
+          <div class="campo">
+            <label>Data da Compra</label>
+            <input type="date" id="inputData" required />
+          </div>
 
-    <button type="submit" class="btn">Enviar para Planilha</button>
-  </form>
-  <p id="msgStatus"></p>
-</div>
+          <div class="campo">
+            <label>O que comprou?</label>
+            <input
+              type="text"
+              id="inputDesc"
+              placeholder="Ex: Mercado Guanabara"
+              required
+            />
+          </div>
+
+          <div class="campo">
+            <label>Valor (R$)</label>
+            <input
+              type="number"
+              step="0.01"
+              id="inputValor"
+              placeholder="0.00"
+              required
+            />
+          </div>
+
+          <div class="campo">
+            <label>Quem gastou?</label>
+            <select id="inputResponsavel" required>
+              <option value="Julinho">Julinho</option>
+              <option value="Fabiana">Fabiana</option>
+            </select>
+          </div>
+
+          <div class="campo">
+            <label>Mês da Fatura</label>
+            <select id="inputFatura" required>
+              <option value="Janeiro">Janeiro</option>
+              <option value="Fevereiro">Fevereiro</option>
+              <option value="Março">Março</option>
+              <option value="Abril">Abril</option>
+              <option value="Maio">Maio</option>
+              <option value="Junho">Junho</option>
+              <option value="Julho">Julho</option>
+              <option value="Agosto">Agosto</option>
+              <option value="Setembro">Setembro</option>
+              <option value="Outubro">Outubro</option>
+              <option value="Novembro">Novembro</option>
+              <option value="Dezembro">Dezembro</option>
+            </select>
+          </div>
+
+          <button type="submit" class="btn btn-salvar">
+            Salvar na Planilha
+          </button>
+          <a href="index.html" class="btn-voltar">Voltar ao Início</a>
+        </form>
+      </section>
+    </div>
+
+    <script>
+      const SENHA_MESTRA = "@fra2003"; // Altere sua senha aqui!
+      const WEB_APP_URL =
+        "https://script.google.com/macros/s/AKfycbzw-Z-3tQvHK9FwTspiT5yb8XRwYISarQcxY3SDgrXLoNV9QoIoFpzkW_etSMUJJ6Nt/exec"; // Cole a URL do Apps Script
+
+      function verificarSenha() {
+        const digitada = document.getElementById("senhaInput").value;
+        if (digitada === SENHA_MESTRA) {
+          document.getElementById("telaLogin").style.display = "none";
+          document.getElementById("areaRestrita").style.display = "block";
+          document.getElementById("tituloPagina").innerText = "📝 Novo Gasto";
+          document.getElementById("statusAdmin").innerText =
+            "Preencha os dados da compra";
+        } else {
+          document.getElementById("erroSenha").style.display = "block";
+        }
+      }
+
+      document
+        .getElementById("formGasto")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const btn = e.target.querySelector("button");
+          const status = document.getElementById("statusAdmin");
+
+          btn.disabled = true;
+          status.innerText = "Enviando para a planilha... ☁️";
+
+          const corpo = {
+            data: document.getElementById("inputData").value,
+            descricao: document.getElementById("inputDesc").value,
+            valor: document.getElementById("inputValor").value,
+            responsavel: document.getElementById("inputResponsavel").value,
+            fatura: document.getElementById("inputFatura").value,
+          };
+
+          try {
+            await fetch(WEB_APP_URL, {
+              method: "POST",
+              mode: "no-cors",
+              body: JSON.stringify(corpo),
+            });
+
+            status.innerText = "✅ Gasto registrado com sucesso!";
+            status.className = "status-sucesso";
+            e.target.reset();
+          } catch (erro) {
+            status.innerText = "❌ Erro ao salvar.";
+            status.className = "status-erro";
+          } finally {
+            btn.disabled = false;
+          }
+        });
+    </script>
+  </body>
+</html>
